@@ -5,14 +5,14 @@ format: html
 editor: visual
 ---
 
-# Cargar el Archivo y librerias
+# Pregunta 1 Cargar el Archivo y librerias
 ```{r}
 library(tidyverse)
 library(openxlsx)
 moras <- read.xlsx("moras para R.xlsx")
 ```
 
-# Pregunta 2)
+# Pregunta 2
 ```{r}
 moras %>%
   summarise(
@@ -35,7 +35,7 @@ moras %>%
   )
 ```
 
-# Pregunta 3)
+# Pregunta 3
 ```{r}
 ## Z-Score de Salario
 zscore_Salario <- abs((moras$SALARIO - mean(moras$SALARIO, na.rm = TRUE)) /
@@ -44,7 +44,7 @@ zscore_Salario <- abs((moras$SALARIO - mean(moras$SALARIO, na.rm = TRUE)) /
 zscore_Edad <- abs((moras$EDAD - mean(moras$EDAD, na.rm = TRUE)) /
               sd(moras$EDAD, na.rm = TRUE))
 
-moras %>%
+moras <- moras %>%
   mutate(
     Z_Score_Salario = case_when(
       is.na(zscore_Salario) ~ "FALTANTE",
@@ -57,10 +57,51 @@ moras %>%
       TRUE ~ "NO ATÍPICO"
   )
 )
+moras
 ```
 
-# Pregunta 4)
+# Pregunta 4
 ```{r}
 colMeans(is.na(moras)) * 100
 ```
+
+# Pregunta 5
+```{r}
+## Calcular la moda para imputar los categóricos
+calcular_moda <- function(x) {
+  frecuencias <- table(x)
+  moda <- names(frecuencias)[which.max(frecuencias)]
+}
+## Imputar SALARIO con la media
+moras <- moras %>%
+  mutate(
+    SALARIO_IMPUTADO = if_else(
+      is.na(SALARIO),
+      mean(SALARIO, na.rm = TRUE),
+      SALARIO
+    )
+  )
+
+## Imputar EDAD con la media
+moras <- moras %>%
+  mutate(
+    EDAD_IMPUTADO = if_else(
+      is.na(EDAD),
+      mean(EDAD, na.rm = TRUE),
+      EDAD
+    )
+  )
+
+## Imputar TIPO_ASEGURAMIENTO con la media
+moras <- moras %>%
+  mutate(
+    TIPO_ASEGURAMIENTO_IMPUTADO = if_else(
+      is.na(TIPO_ASEGURAMIENTO),
+      calcular_moda(TIPO_ASEGURAMIENTO),
+      TIPO_ASEGURAMIENTO
+    )
+  )
+moras
+```
+
 
