@@ -59,3 +59,8 @@ moras %>%
 )
 ```
 
+# Pregunta 4)
+```{r}
+colMeans(is.na(moras)) * 100
+```
+
