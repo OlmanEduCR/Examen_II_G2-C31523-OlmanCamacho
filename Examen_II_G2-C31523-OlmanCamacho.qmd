@@ -116,7 +116,7 @@ moras %>%
   labs(title = "Distribución de SEXO", x = "SEXO", y = "Cantidad de individuos")
 ### Se observan más individuos de género Masculino que femenino, en la muestra
 
-## Gráfico Sector
+## Gráfico SECTOR
 moras %>%
   count(SECTOR) %>%
   ggplot(aes(x = SECTOR, y = n)) +
@@ -166,5 +166,84 @@ moras %>%
             size = 4) +
   labs(title = "Distribución de INDICADOR_MOROSO", x = "INDICADOR_MOROSO", y = "Cantidad de individuos")
 ### En la muestra se observan menos individuos en condición de morosidad en contraste con los individuos que no tienen deudas.
+```
+
+# Pregunta 7
+```{r}
+## Gráfico SEXO-INDICADOR_MOROSO
+moras %>%
+  count(SEXO, INDICADOR_MOROSO) %>%
+  group_by(SEXO) %>%
+  mutate(pct = n / sum(n) * 100) %>%
+  ggplot(aes(x = SEXO, y = pct, fill = INDICADOR_MOROSO)) +
+  geom_col(position = "fill") +
+  labs(
+    title = "Relación entre SEXO y Morosidad",
+    x = "Categoría",
+    y = "Porcentaje",
+    fill = "Moroso"
+  )
+### Según el gráfico relacionado al género, se puede observar que tanto en hombres como en mujeres, el porcentaje de personas morosas es baja, de hecho no alcanza ni el 20% de la muestra. Cabe recalcar que en el total de datos, la mayor cantidad de individuos morosos son hombres. Podemos determinar, en esta muestra, que el género no exhibe una conexión notable con la situación de morosidad.
+
+## Gráfico TIPO_ASEGURAMIENTO-INDICADOR_MOROSO
+moras %>%
+  count(TIPO_ASEGURAMIENTO_IMPUTADO, INDICADOR_MOROSO) %>%
+  group_by(TIPO_ASEGURAMIENTO_IMPUTADO) %>%
+  mutate(pct = n / sum(n) * 100) %>%
+  ggplot(aes(x = TIPO_ASEGURAMIENTO_IMPUTADO, y = pct, fill = INDICADOR_MOROSO)) +
+  geom_col(position = "fill") +
+  labs(
+    title = "Relación entre TIPO_ASEGURAMIENTO y Morosidad",
+    x = "Categoría",
+    y = "Porcentaje",
+    fill = "Moroso"
+  ) +
+  coord_flip()
+### Según el gráfico relacionado al tipo de aseguramiento, se puede observar que el seguro de Asalariado contiene la mayor parte de los individuos morosos. Sin embargo, a su vez, este mismo seguro contiene mucho más de la mitad de los individuos que son no morosos. Podemos determinar, en esta muestra, que el tipo de aseguramiento no exhibe una conexión siginificativa con la situación de morosidad.
+
+## Gráfico SECTOR-INDICADOR_MOROSO
+moras %>%
+  count(SECTOR, INDICADOR_MOROSO) %>%
+  group_by(SECTOR) %>%
+  mutate(pct = n / sum(n) * 100) %>%
+  ggplot(aes(x = SECTOR, y = pct, fill = INDICADOR_MOROSO)) +
+  geom_col(position = "fill") +
+  labs(
+    title = "Relación entre SECTOR y Morosidad",
+    x = "Categoría",
+    y = "Porcentaje",
+    fill = "Moroso"
+  )
+### Según el gráfico relacionado al sector, se puede observar que tanto en el sector público como en el sector privado, el porcentaje de personas morosas es baja, de hecho no alcanza ni el 20% de la muestra. Cabe recalcar que en el total de datos, la mayor cantidad de individuos morosos pertenecen al sector privado. Podemos determinar, en esta muestra, que el sector no exhibe una relación consistente con la situación de morosidad.
+
+## Gráfico INDICADOR_ACTIVO-INDICADOR_MOROSO
+moras %>%
+  count(INDICADOR_ACTIVO, INDICADOR_MOROSO) %>%
+  group_by(INDICADOR_ACTIVO) %>%
+  mutate(pct = n / sum(n) * 100) %>%
+  ggplot(aes(x = INDICADOR_ACTIVO, y = pct, fill = INDICADOR_MOROSO)) +
+  geom_col(position = "fill") +
+  labs(
+    title = "Relación entre INDICADOR_ACTIVO y Morosidad",
+    x = "Categoría",
+    y = "Porcentaje",
+    fill = "Moroso"
+  )
+### Según el gráfico relacionado al estado del seguro, se puede observar que tanto los seguros activos como los seguros inactivos el porcentaje de individuos morosos es baja, de hecho no alcanza ni el 20% de la muestra. Cabe recalcar que en el total de datos, la mayor cantidad de individuos morosos están con un seguro activo. Podemos determinar, en esta muestra, que el estado del seguro no exhibe una conexión notable con la situación de morosidad.
+
+## Gráfico INDICADOR.EXTRANJERO-INDICADOR_MOROSO
+moras %>%
+  count(INDICADOR.EXTRANJERO, INDICADOR_MOROSO) %>%
+  group_by(INDICADOR.EXTRANJERO) %>%
+  mutate(pct = n / sum(n) * 100) %>%
+  ggplot(aes(x = INDICADOR.EXTRANJERO, y = pct, fill = INDICADOR_MOROSO)) +
+  geom_col(position = "fill") +
+  labs(
+    title = "Relación entre INDICADOR.EXTRANJERO y Morosidad",
+    x = "Categoría",
+    y = "Porcentaje",
+    fill = "Moroso"
+  )
+### Según el gráfico relacionado a la nacionalidad, se puede observar que tanto los individuos nacionales como los individuos internacionales, el porcentaje de personas morosas es bastante baja, de hecho no alcanzan ni el 20% de la muestra. Cabe recalcar que en el total de datos, la mayor cantidad de individuos morosos son nacionales. Podemos determinar, en esta muestra, que la nacionalidad no exhibe una relación notable con la situación de morosidad.
 ```
 
