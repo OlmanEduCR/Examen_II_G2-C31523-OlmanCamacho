@@ -35,3 +35,27 @@ moras %>%
   )
 ```
 
+# Pregunta 3)
+```{r}
+## Z-Score de Salario
+zscore_Salario <- abs((moras$SALARIO - mean(moras$SALARIO, na.rm = TRUE)) /
+              sd(moras$SALARIO, na.rm = TRUE))
+
+zscore_Edad <- abs((moras$EDAD - mean(moras$EDAD, na.rm = TRUE)) /
+              sd(moras$EDAD, na.rm = TRUE))
+
+moras %>%
+  mutate(
+    Z_Score_Salario = case_when(
+      is.na(zscore_Salario) ~ "FALTANTE",
+      zscore_Salario > 1.96 ~ "ATÍPICO",
+      TRUE ~ "NO ATÍPICO"
+    ),
+    Z_Score_Edad = case_when(
+      is.na(zscore_Edad) ~ "FALTANTE",
+      zscore_Edad > 1.96 ~ "ATÍPICO",
+      TRUE ~ "NO ATÍPICO"
+  )
+)
+```
+
