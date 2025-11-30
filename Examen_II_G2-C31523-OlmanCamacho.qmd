@@ -104,4 +104,67 @@ moras <- moras %>%
 moras
 ```
 
+# Pregunta 6
+```{r}
+## Gráfico SEXO
+moras %>%
+  count(SEXO) %>%
+  ggplot(aes(x = SEXO, y = n)) +
+  geom_col(fill = "#8027F5") +
+  geom_text(aes(label = n),
+            size = 4) +
+  labs(title = "Distribución de SEXO", x = "SEXO", y = "Cantidad de individuos")
+### Se observan más individuos de género Masculino que femenino, en la muestra
+
+## Gráfico Sector
+moras %>%
+  count(SECTOR) %>%
+  ggplot(aes(x = SECTOR, y = n)) +
+  geom_col(fill = "#8027F5") +
+  geom_text(aes(label = n),
+            size = 4) +
+  labs(title = "Distribución de SECTOR", x = "SECTOR", y = "Cantidad de individuos")
+### Según la muestra hay más individuos del sector Privado que del sector Público.					
+					
+## Gráfico INDICADOR.EXTRANJERO
+moras %>%
+  count(INDICADOR.EXTRANJERO) %>%
+  ggplot(aes(x = INDICADOR.EXTRANJERO, y = n)) +
+  geom_col(fill = "#8027F5") +
+  geom_text(aes(label = n),
+            size = 4) +
+  labs(title = "Distribución de INDICADOR.EXTRANJERO", x = "INDICADOR.EXTRANJERO", y = "Cantidad de individuos")
+### La muestra refleja más individuos nacionales, en comparación con los individuos extranjeros.					
+					
+## Gráfico TIPO_ASEGURAMIENTO_IMPUTADO
+moras %>%
+  count(TIPO_ASEGURAMIENTO_IMPUTADO) %>%
+  ggplot(aes(x = TIPO_ASEGURAMIENTO_IMPUTADO, y = n)) +
+  geom_col(fill = "#8027F5") +
+  geom_text(aes(label = n),
+            size = 4) +
+  labs(title = "Distribución de TIPO_ASEGURAMIENTO_IMPUTADO", x = "TIPO_ASEGURAMIENTO_IMPUTADO", y = "Cantidad de individuos") +
+  coord_flip()
+### Observe que la categoría de "Convenios Especiales De Asegurados Voluntarios" es la categoría que menos individuos posee la menor cantidad en comparación con "Asalariado", que acapara más del 50% de los datos.					
+					
+## Gráfico INDICADOR_ACTIVO
+moras %>%
+  count(INDICADOR_ACTIVO) %>%
+  ggplot(aes(x = INDICADOR_ACTIVO, y = n)) +
+  geom_col(fill = "#8027F5") +
+  geom_text(aes(label = n),
+            size = 4) +
+  labs(title = "Distribución de INDICADOR_ACTIVO", x = "INDICADOR_ACTIVO", y = "Cantidad de individuos")
+### En la muestra se observan más individuos que poseen el seguro activo, en comparación con los que no lo tienen.					
+					
+## Gráfico INDICADOR_MOROSO
+moras %>%
+  count(INDICADOR_MOROSO) %>%
+  ggplot(aes(x = INDICADOR_MOROSO, y = n)) +
+  geom_col(fill = "#8027F5") +
+  geom_text(aes(label = n),
+            size = 4) +
+  labs(title = "Distribución de INDICADOR_MOROSO", x = "INDICADOR_MOROSO", y = "Cantidad de individuos")
+### En la muestra se observan menos individuos en condición de morosidad en contraste con los individuos que no tienen deudas.
+```
 
