@@ -298,3 +298,27 @@ moras %>%
 ### Observamos que el rango que posee la mayor cantidad de individuos morosos son los que su edad está comprendido entre 36 y 45 años. Observe también que el rango que posee la mayor cantidad de individuos sin morosidades está comprendido entre las edades de 26-35 años.
 ```
 
+# Pregunta 10
+```{r}
+library(rpart)
+library(rpart.plot)
+## Mejora de Categorías
+moras <- moras %>%
+  mutate(
+    TIPO_ASEGURAMIENTO = case_when(
+      TIPO_ASEGURAMIENTO == "ASALARIADO" ~ "ASAL",
+      TIPO_ASEGURAMIENTO == "PENSIONADOS EN SU PROPIO SISTEMA" ~ "PESPS",
+      TIPO_ASEGURAMIENTO == "ASEGURADO VOLUNTARIO" ~ "ASVOL",
+      TIPO_ASEGURAMIENTO == "CONVENIOS ESPECIALES DE ASEGURADOS VOLUNTARIOS" ~ "CEDAV",
+      TIPO_ASEGURAMIENTO == "CONVENIOS ESPECIALES DE TRABAJADORES INDEPENDIENTES" ~ "CEDTI",
+      TIPO_ASEGURAMIENTO == "TRABAJADOR INDEPENDIENTE" ~ "TI",
+      TRUE ~ TIPO_ASEGURAMIENTO
+    )
+  )
+
+## Gráfico 
+tree <- rpart(INDICADOR_MOROSO~., data = moras)
+rpart.plot(tree)
+```
+### Respuesta
+Se muestran diversas ramas o casos en donde se tiene a la mayoría de la población y se van filtrando si son morosos o no, de esta manera se puede ver en qué sectores se concentran más dicha población, para así, poder definir de mejor manera a que sector se le puede proporcionar un seguro.
