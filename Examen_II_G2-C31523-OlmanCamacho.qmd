@@ -245,5 +245,56 @@ moras %>%
     fill = "Moroso"
   )
 ### Según el gráfico relacionado a la nacionalidad, se puede observar que tanto los individuos nacionales como los individuos internacionales, el porcentaje de personas morosas es bastante baja, de hecho no alcanzan ni el 20% de la muestra. Cabe recalcar que en el total de datos, la mayor cantidad de individuos morosos son nacionales. Podemos determinar, en esta muestra, que la nacionalidad no exhibe una relación notable con la situación de morosidad.
+
+```
+
+# Pregunta 8
+```{r}
+## Rangos para SALARIO
+moras <- moras %>%
+  mutate(
+    Rango_SALARIO = case_when(
+      SALARIO_IMPUTADO < 300000 ~ "1) 0-300k",
+      SALARIO_IMPUTADO >= 300000 & SALARIO_IMPUTADO < 600000 ~ "2) 300k-600k",
+      SALARIO_IMPUTADO >= 600000 & SALARIO_IMPUTADO < 900000 ~ "3) 600k-900k",
+      SALARIO_IMPUTADO >= 900000 & SALARIO_IMPUTADO < 1200000 ~ "4) 900k-1200k",
+      TRUE ~ "5) 1200k+"
+    ),
+    Rango_EDAD = case_when(
+      EDAD_IMPUTADO <= 25 ~ "1) 18-25",
+      SALARIO_IMPUTADO > 25 & SALARIO_IMPUTADO <= 35 ~ "2) 25-35",
+      SALARIO_IMPUTADO > 35 & SALARIO_IMPUTADO <= 45 ~ "3) 35-45",
+      SALARIO_IMPUTADO > 45 & SALARIO_IMPUTADO <= 55 ~ "4) 45-55",
+      TRUE ~ "5) 56+"
+    )
+  )
+
+## Gráfico Salarios-Morosidad
+moras %>%
+  count(Rango_SALARIO, INDICADOR_MOROSO) %>%
+  group_by(Rango_SALARIO) %>%
+  ggplot(aes(x = Rango_SALARIO, y = n, fill = INDICADOR_MOROSO)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Relación entre Rango_SALARIO y Morosidad",
+    x = "Categoría",
+    y = "Cantidad",
+    fill = "Moroso"
+  )
+### Observamos que el rango que posee la mayor cantidad de individuos morosos son los que su salario está comprendido entre 300k y 600k. Sin embrago, este mismo rango posee las mayor conatidad de individuos que no poseen morosidades.
+
+## Gráfico Salarios-Morosidad
+moras %>%
+  count(Rango_EDAD, INDICADOR_MOROSO) %>%
+  group_by(Rango_EDAD) %>%
+  ggplot(aes(x = Rango_EDAD, y = n, fill = INDICADOR_MOROSO)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Relación entre Rango_EDAD y Morosidad",
+    x = "Categoría",
+    y = "Cantidad",
+    fill = "Moroso"
+  )
+### Observamos que el rango que posee la mayor cantidad de individuos morosos son los que su edad está comprendido entre 36 y 45 años. Observe también que el rango que posee la mayor cantidad de individuos sin morosidades está comprendido entre las edades de 26-35 años.
 ```
 
